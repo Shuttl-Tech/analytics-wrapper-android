@@ -27,6 +27,7 @@ class UserMetadata {
     }
 
     var name: String? = null
+    var gender: String? = null
     var phone: String? = null
     var birthDate: String? = null
     var referralId: String? = null

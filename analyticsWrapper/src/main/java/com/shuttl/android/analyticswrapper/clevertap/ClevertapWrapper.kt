@@ -9,6 +9,7 @@ import com.shuttl.android.analyticswrapper.models.InitSDKs
 import com.shuttl.android.analyticswrapper.models.InitSDKsDirectly
 import com.shuttl.android.analyticswrapper.models.LoggerPayload
 import com.shuttl.android.analyticswrapper.models.UserMetadata
+import java.util.*
 
 
 import kotlin.collections.HashMap
@@ -40,7 +41,24 @@ object ClevertapWrapper : SDKTracker {
     /**
      * Save user properties to track user specific details like phone, email etc.
      */
-    private fun saveUserProperties(peoplePropertiesMap: Map<String, Any?>) {
+    private fun saveUserProperties(userMetadata: UserMetadata) {
+
+        val peoplePropertiesMap = HashMap<String, Any?>()
+
+        peoplePropertiesMap[ClevertapConstants.CT_IDENTITY] = userMetadata.id
+        peoplePropertiesMap[ClevertapConstants.CT_ENCRYPTED_USER_ID] = userMetadata.id
+        peoplePropertiesMap[ClevertapConstants.CT_NAME] = userMetadata.name
+        peoplePropertiesMap[ClevertapConstants.CT_USER_GENDER] = userMetadata.gender
+        peoplePropertiesMap[ClevertapConstants.CT_GENDER] = userMetadata.gender
+        peoplePropertiesMap[ClevertapConstants.CT_EMAIL] = userMetadata.email
+        peoplePropertiesMap[ClevertapConstants.CT_PHONE] = "+66" + userMetadata.phone
+        peoplePropertiesMap[ClevertapConstants.CT_MOBILE_NUMBER] = "+66" + userMetadata.phone // duplicate property in order to allow segmentation in CleverTap
+        peoplePropertiesMap[ClevertapConstants.CT_DATE_OF_BIRTH] = userMetadata.birthDate
+        peoplePropertiesMap[ClevertapConstants.CT_DOB] = userMetadata.birthDate
+        peoplePropertiesMap[ClevertapConstants.CT_HOME_LOCATION] = userMetadata.location
+
+        peoplePropertiesMap.putAll(userMetadata.userBlob ?: emptyMap())
+
         cleverTap?.pushProfile(peoplePropertiesMap) //clevertap profile
     }
 
@@ -105,7 +123,7 @@ object ClevertapWrapper : SDKTracker {
 
     override fun pushUserMetadata(userMetadata: UserMetadata) {
         if(!enableClevertap) return
-        saveUserProperties(userMetadata.userBlob!!)
+        saveUserProperties(userMetadata)
     }
 
 }
