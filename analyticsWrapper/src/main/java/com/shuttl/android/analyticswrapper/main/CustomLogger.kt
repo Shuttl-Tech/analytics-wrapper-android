@@ -42,9 +42,7 @@ object CustomLogger {
 
     fun initSDKsDirectly(block: InitSDKsDirectly.() -> Unit): InitSDKsDirectly = InitSDKsDirectly().apply(block)
 
-    fun LoggerPayload.sentryPayload(block: SentryPayload.() -> Unit) {
-        sentryPayload = SentryPayload().apply(block)
-    }
+    fun sentryPayload(block: SentryPayload.() -> Unit): SentryPayload = SentryPayload().apply(block)
 
     fun init(sdksList: List<LogType>, initSDK: InitSDKs) {
         for (sdk in translateLogType(sdksList)) {

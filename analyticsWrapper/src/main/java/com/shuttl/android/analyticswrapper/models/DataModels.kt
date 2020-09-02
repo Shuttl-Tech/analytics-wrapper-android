@@ -19,15 +19,15 @@ data class SentryPayload(
 )
 
 data class InitSDKs(
-        val context: Context? = null,
-        val isDebug: Boolean? = null,
-        val buildType: String? = null,
-        val sentryDsn: String? = null,
-        val intercomAPIKey: String? = null,
-        val intercomAppId: String? = null
+        var context: Context? = null,
+        var isDebug: Boolean? = null,
+        var buildType: String? = null,
+        var sentryDsn: String? = null,
+        var intercomAPIKey: String? = null,
+        var intercomAppId: String? = null
 )
 
 data class InitSDKsDirectly(
-        val cleverTap: CleverTapAPI? = null,
-        val firebaseAnalytics: FirebaseAnalytics? = null
+        var cleverTap: CleverTapAPI? = null,
+        var firebaseAnalytics: FirebaseAnalytics? = null
 )
